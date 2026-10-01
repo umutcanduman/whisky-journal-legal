@@ -1,6 +1,125 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Legal</title><link rel="stylesheet" href="style.css"></head>
-<body><main><p class="eyebrow">WHISKY TASTING JOURNAL</p><h1>Legal</h1>
-<p><a href="privacy/">Privacy policy</a></p><p><a href="terms/">Terms of use</a></p>
-<p><a href="support/">Support</a></p>
-<p class="footer"><a href="mailto:duok@duokteknoloji.com">duok@duokteknoloji.com</a></p></main></body></html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The W App — a whisky tasting journal</title>
+<meta name="description" content="Scan a bottle and the app works out what it is. Score it, note what you tasted, and keep every dram you have tried in one place.">
+<meta property="og:title" content="The W App">
+<meta property="og:description" content="A whisky tasting journal. Scan a bottle, record what you thought, remember every dram.">
+<link rel="stylesheet" href="style.css">
+<style>
+  .hero { text-align: center; padding-block: 8px 24px; }
+  .hero h1 { font-size: clamp(38px, 11vw, 60px); margin: 0 0 8px; line-height: 1.05; }
+  .tagline { color: var(--muted); font-size: 18px; margin: 0 auto; max-width: 30ch; }
+  .shots { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 32px 0; }
+  .shots img { width: 100%; border-radius: 14px; border: 1px solid var(--border); background: var(--surface); display: block; }
+  @media (max-width: 560px) { .shots { gap: 8px; } }
+  .points { display: grid; gap: 14px; margin: 0 0 32px; padding: 0; list-style: none; }
+  .points li { padding-left: 26px; position: relative; color: var(--muted); }
+  .points li::before { content: "·"; position: absolute; left: 8px; color: var(--accent); font-size: 28px; line-height: 18px; }
+  .points b { color: var(--text); font-weight: 600; }
+  form { background: var(--surface); border: 1px solid var(--border); border-radius: 18px; padding: 22px; }
+  form h2 { margin: 0 0 6px; font-size: 22px; }
+  form p { margin: 0 0 16px; font-size: 15px; }
+  .row { display: flex; gap: 10px; flex-wrap: wrap; }
+  input[type=email] { flex: 1 1 220px; min-width: 0; font: inherit; font-size: 16px; padding: 14px 16px; border-radius: 12px; border: 1px solid var(--border); background: var(--bg); color: var(--text); }
+  button { font: inherit; font-size: 16px; font-weight: 600; padding: 14px 22px; border-radius: 12px; border: 0; background: var(--text); color: var(--bg); cursor: pointer; }
+  button[disabled] { opacity: .6; cursor: default; }
+  .said { margin: 14px 0 0; font-size: 15px; min-height: 22px; }
+  .said.ok { color: var(--accent); font-weight: 600; }
+  .said.bad { color: #8A4B3B; }
+  .small { font-size: 13px; color: var(--faint); margin-top: 14px; }
+</style>
+</head>
+<body>
+<main>
+  <div class="hero">
+    <p class="eyebrow">WHISKY TASTING JOURNAL</p>
+    <h1>The W App</h1>
+    <p class="tagline">Taste. Remember. Discover.</p>
+  </div>
+
+  <div class="shots">
+    <img src="shots/1-home.png" alt="The home screen, showing recent tastings with their scores" width="1290" height="2796" loading="lazy">
+    <img src="shots/2-scan.png" alt="The app reading a bottle label from a photograph" width="1290" height="2796" loading="lazy">
+    <img src="shots/3-record.png" alt="Recording a tasting: a score, and notes on nose, palate and finish" width="1290" height="2796" loading="lazy">
+  </div>
+
+  <ul class="points">
+    <li><b>Point your camera at a bottle</b> and the app works out what it is, then asks you to confirm. It never writes a guess into your journal.</li>
+    <li><b>Record a tasting in a minute</b> — a score, a few words, whether you would drink it again.</li>
+    <li><b>Keep three lists apart:</b> what you have tasted, what you want, and what you own.</li>
+    <li><b>Private by default.</b> No ads, no tracking, nothing sold. Delete your account, and everything in it, from inside the app.</li>
+  </ul>
+
+  <form id="signup">
+    <h2>Get early access</h2>
+    <p>Leave your email and you will get an invitation to the test version, and a note when it reaches the App Store. Nothing else, ever.</p>
+    <div class="row">
+      <input id="email" type="email" name="email" placeholder="you@example.com" autocomplete="email" required inputmode="email" aria-label="Your email address">
+      <button id="go" type="submit">Send it to me</button>
+    </div>
+    <p class="said" id="said" role="status" aria-live="polite"></p>
+    <p class="small">We keep your address to send you those two things. Ask us to remove it any time: <a href="mailto:duok@duokteknoloji.com">duok@duokteknoloji.com</a>. See the <a href="privacy/">privacy policy</a>.</p>
+  </form>
+
+  <p class="footer">
+    Made by Umutcan Duman · <a href="mailto:duok@duokteknoloji.com">duok@duokteknoloji.com</a><br>
+    <a href="privacy/">Privacy policy</a> · <a href="terms/">Terms of use</a> · <a href="support/">Support</a>
+  </p>
+</main>
+
+<script>
+  /* Straight into our own database: anyone may add their address, nobody can
+     read the list back (row-level security). No third-party form, no
+     tracker. If it fails for any reason, the message offers email instead —
+     at a show, a dead form is worse than a long one. */
+  var URL_ = 'https://lvldusmdfdexarpwnnft.supabase.co/rest/v1/interest_signups';
+  var KEY = 'sb_publishable_jywFdfNdP5rfikRmlnPMsQ_dIP7vmdS';
+
+  var form = document.getElementById('signup');
+  var said = document.getElementById('said');
+  var go = document.getElementById('go');
+
+  form.addEventListener('submit', function (event) {
+    event.preventDefault();
+
+    var email = document.getElementById('email').value.trim();
+    if (!email) return;
+
+    go.disabled = true;
+    said.className = 'said';
+    said.textContent = 'Sending…';
+
+    fetch(URL_, {
+      method: 'POST',
+      headers: {
+        'apikey': KEY,
+        'Authorization': 'Bearer ' + KEY,
+        'Content-Type': 'application/json',
+        'Prefer': 'return=minimal'
+      },
+      body: JSON.stringify({ email: email, source: 'whisky-show' })
+    }).then(function (response) {
+      if (response.status === 409) {
+        said.className = 'said ok';
+        said.textContent = 'You are already on the list — see you soon.';
+        form.reset();
+        return;
+      }
+      if (!response.ok) throw new Error(response.status);
+      said.className = 'said ok';
+      said.textContent = 'Thank you. You will hear from us shortly.';
+      form.reset();
+    }).catch(function () {
+      said.className = 'said bad';
+      said.innerHTML = 'That did not go through. Please email ' +
+        '<a href="mailto:duok@duokteknoloji.com?subject=Early%20access">duok@duokteknoloji.com</a> and we will add you.';
+    }).then(function () {
+      go.disabled = false;
+    });
+  });
+</script>
+</body>
+</html>
