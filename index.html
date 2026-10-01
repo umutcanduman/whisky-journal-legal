@@ -21,7 +21,12 @@
      taken as a fixed box and a 110px-wide column is stretched to 1093px
      tall, which smears the screenshots into vertical streaks. */
   .shots img { width: 100%; height: auto; border-radius: 14px; border: 1px solid var(--border); background: var(--surface); display: block; }
-  @media (max-width: 560px) { .shots { gap: 8px; } }
+  /* On a phone, three columns make each screenshot about 110px wide —
+     present but unreadable. One at a time, full width, is what someone
+     scanning a QR code at a whisky show actually sees. */
+  @media (max-width: 560px) {
+    .shots { grid-template-columns: minmax(0, 1fr); gap: 16px; max-width: 320px; margin-inline: auto; }
+  }
   main { overflow-wrap: break-word; }
   .points { display: grid; gap: 14px; margin: 0 0 32px; padding: 0; list-style: none; }
   .points li { padding-left: 26px; position: relative; color: var(--muted); }
