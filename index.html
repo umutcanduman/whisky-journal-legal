@@ -10,10 +10,13 @@
 <link rel="stylesheet" href="style.css">
 <style>
   .hero { text-align: center; padding-block: 8px 24px; }
-  .hero h1 { font-size: clamp(38px, 11vw, 60px); margin: 0 0 8px; line-height: 1.05; }
+  .hero h1 { font-size: clamp(34px, 9vw, 56px); margin: 0 0 8px; line-height: 1.05; overflow-wrap: break-word; }
   .tagline { color: var(--muted); font-size: 18px; margin: 0 auto; max-width: 30ch; }
   .shots { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 32px 0; }
-  .shots img { width: 100%; border-radius: 14px; border: 1px solid var(--border); background: var(--surface); display: block; }
+  /* height:auto matters: without it the width/height attributes below are
+     taken as a fixed box and a 110px-wide column is stretched to 1093px
+     tall, which smears the screenshots into vertical streaks. */
+  .shots img { width: 100%; height: auto; border-radius: 14px; border: 1px solid var(--border); background: var(--surface); display: block; }
   @media (max-width: 560px) { .shots { gap: 8px; } }
   .points { display: grid; gap: 14px; margin: 0 0 32px; padding: 0; list-style: none; }
   .points li { padding-left: 26px; position: relative; color: var(--muted); }
@@ -41,9 +44,9 @@
   </div>
 
   <div class="shots">
-    <img src="shots/1-home.png" alt="The home screen, showing recent tastings with their scores" width="1290" height="2796" loading="lazy">
-    <img src="shots/2-scan.png" alt="The app reading a bottle label from a photograph" width="1290" height="2796" loading="lazy">
-    <img src="shots/3-record.png" alt="Recording a tasting: a score, and notes on nose, palate and finish" width="1290" height="2796" loading="lazy">
+    <img src="shots/1-home.png" alt="The home screen, showing recent tastings with their scores" width="540" height="1093" loading="lazy">
+    <img src="shots/2-scan.png" alt="The app reading a bottle label from a photograph" width="540" height="1093" loading="lazy">
+    <img src="shots/3-record.png" alt="Recording a tasting: a score, and notes on nose, palate and finish" width="540" height="1093" loading="lazy">
   </div>
 
   <ul class="points">
